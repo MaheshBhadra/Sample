@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical Love File 💕 Will You Be My Valentine?</title>
+
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f0 50%, #ffd4e5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ---------- FUN FX ---------- */
+        .tap-bounce { transition: transform 120ms ease; }
+        .tap-bounce:active { transform: scale(0.98); }
+
+        .screen-shake { animation: screenShake 420ms ease-in-out; }
+        @keyframes screenShake {
+            0% { transform: translate(0,0); }
+            20% { transform: translate(-4px, 2px); }
+            40% { transform: translate(4px, -2px); }
+            60% { transform: translate(-3px, -1px); }
+            80% { transform: translate(3px, 1px); }
+            100% { transform: translate(0,0); }
+        }
+
+        .typewriter {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid rgba(255,20,147,0.8);
+            animation: typing var(--tw-duration, 3.2s) steps(var(--tw-steps, 36), end),
+            caret 600ms steps(1, end) infinite;
+            max-width: 100%;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes caret { 50% { border-right-color: transparent; } }
+
+        /* ECG Monitor */
+        .ecg-wrap {
+            margin: 14px auto 0;
+            width: 100%;
+            max-width: 520px;
+            height: 88px;
+            background: rgba(0,0,0,0.86);
+            border-radius: 14px;
+            padding: 10px 12px;
+            box-shadow: 0 12px 26px rgba(0,0,0,0.18);
+            border: 2px solid rgba(255,105,180,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        .ecg-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.18;
+            background-image:
+                    linear-gradient(to right, rgba(255,255,255,0.16) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.16) 1px, transparent 1px);
+            background-size: 26px 26px;
+            pointer-events: none;
+        }
+        .ecg-label {
+            position: absolute;
+            top: 8px; left: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.4px;
+        }
+        .ecg-heart {
+            position: absolute;
+            top: 6px; right: 10px;
+            font-size: 18px;
+            filter: drop-shadow(0 0 10px rgba(255,20,147,0.65));
+            animation: beat 1.1s infinite ease-in-out;
+        }
+        @keyframes beat { 0%, 100% { transform: scale(1);} 40% { transform: scale(1.25);} }
+
+        .ecg-line {
+            position: absolute;
+            left: -30%;
+            top: 18px;
+            width: 160%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            filter: drop-shadow(0 0 10px rgba(0,255,168,0.35));
+            animation: ecgMove 2.6s linear infinite;
+        }
+        @keyframes ecgMove { from { transform: translateX(0); } to { transform: translateX(-35%); } }
+        .ecg-line svg { width: 100%; height: 100%; }
+        .ecg-line path {
+            stroke: #00ffb2;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Easter egg modal */
+        .egg-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            padding: 18px;
+        }
+        .egg-overlay.show { display: flex; }
+        .egg-card {
+            width: 100%;
+            max-width: 520px;
+            background: white;
+            border-radius: 20px;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .egg-card h3 { color: #ff1493; font-size: 22px; margin-bottom: 10px; }
+        .egg-card p { color: #444; font-size: 15px; line-height: 1.6; }
+        .egg-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 10px 20px rgba(255,105,180,0.35);
+        }
+
+        /* Doctor stamp */
+        .stamp {
+            position: absolute;
+            top: 18px;
+            right: 16px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 7px solid rgba(255,255,255,0.92);
+            box-shadow:
+                    0 18px 40px rgba(0,0,0,0.25),
+                    inset 0 0 0 3px rgba(0,0,0,0.12);
+            display: grid;
+            place-items: center;
+            transform: rotate(-16deg) scale(0.35);
+            opacity: 0;
+            filter: drop-shadow(0 12px 25px rgba(0,0,0,0.22));
+            background:
+                    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+                    rgba(0,0,0,0.14);
+        }
+        .stamp-inner {
+            width: 86%;
+            height: 86%;
+            border-radius: 50%;
+            border: 3px dashed rgba(255,255,255,0.8);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        .stamp-text {
+            color: rgba(255,255,255,0.96);
+            font-weight: 900;
+            letter-spacing: 1px;
+            line-height: 1.05;
+            text-transform: uppercase;
+        }
+        .stamp-text .big { font-size: 26px; }
+        .stamp-text .small { font-size: 12px; opacity: 0.92; margin-top: 6px; display: block; }
+        .stamp.approve {
+            background:
+                    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), transparent 55%),
+                    rgba(76, 175, 80, 0.85);
+        }
+        .stamp.slam {
+            animation: stampSlam 520ms cubic-bezier(0.2, 0.9, 0.25, 1) forwards,
+            stampInk 900ms ease-out forwards;
+        }
+        @keyframes stampSlam {
+            0%   { transform: rotate(-18deg) scale(1.9) translateY(-40px); opacity: 0; }
+            60%  { transform: rotate(-18deg) scale(1.05) translateY(0); opacity: 1; }
+            85%  { transform: rotate(-18deg) scale(0.98) translateY(0); }
+            100% { transform: rotate(-18deg) scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes stampInk {
+            0% { filter: blur(1px) saturate(1.2); }
+            100% { filter: blur(0) saturate(1); }
+        }
+
+        /* ---------- ORIGINAL STYLES ---------- */
+
+        .background-animations {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.8;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            max-width: 180px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        @media (max-width: 768px) { .floating-emoji { max-width: 100px; } }
+        @media (min-width: 769px) and (max-width: 1024px) { .floating-emoji { max-width: 130px; } }
+        @media (max-width: 1024px) { .card-container.wide { max-width: 95%; } }
+
+        @keyframes floatAcross1 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(100px, -80px) rotate(10deg) scale(1.1); }
+            50% { transform: translate(200px, -40px) rotate(-10deg) scale(1.05); }
+            75% { transform: translate(100px, -120px) rotate(5deg) scale(1.15); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+        @keyframes floatAcross2 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(-120px, -60px) rotate(-8deg) scale(1.08); }
+            50% { transform: translate(-80px, -130px) rotate(12deg) scale(1.12); }
+            75% { transform: translate(-150px, -50px) rotate(-5deg) scale(1.05); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+        @keyframes floatAcross3 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(80px, -100px) rotate(15deg) scale(1.1); }
+            66% { transform: translate(-60px, -80px) rotate(-12deg) scale(1.15); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+
+        .floating-emoji:nth-child(1) { animation: floatAcross1 25s infinite ease-in-out; }
+        .floating-emoji:nth-child(2) { animation: floatAcross2 20s infinite ease-in-out; }
+        .floating-emoji:nth-child(3) { animation: floatAcross3 22s infinite ease-in-out; }
+        .floating-emoji:nth-child(4) { animation: floatAcross1 28s infinite ease-in-out; }
+        .floating-emoji:nth-child(5) { animation: floatAcross2 24s infinite ease-in-out; }
+
+        .hearts-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: float-up 15s infinite ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        .card-container {
+            position: relative;
+            z-index: 10;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(255, 105, 180, 0.4);
+            padding: 40px 50px;
+            max-width: 650px;
+            width: 90%;
+            max-height: 85vh;
+            text-align: center;
+            border: 5px solid #ff69b4;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .card-container.wide {
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 30px 50px;
+        }
+
+        @media (max-height: 900px) {
+            .card-container { max-height: 80vh; padding: 30px 40px; }
+            .card-container.wide { max-height: 80vh; padding: 25px 40px; }
+        }
+        @media (max-height: 768px) {
+            .card-container { max-height: 85vh; padding: 25px 35px; }
+            .card-container.wide { max-height: 85vh; padding: 20px 30px; }
+        }
+        @media (max-height: 600px) {
+            .card-container { max-height: 90vh; padding: 20px 30px; }
+            .card-container.wide { max-height: 90vh; padding: 15px 25px; }
+        }
+
+        .card-container::-webkit-scrollbar { width: 10px; }
+        .card-container::-webkit-scrollbar-track { background: #ffe6f0; border-radius: 10px; }
+        .card-container::-webkit-scrollbar-thumb { background: #ff69b4; border-radius: 10px; }
+        .card-container::-webkit-scrollbar-thumb:hover { background: #ff1493; }
+
+        .card {
+            display: none;
+            animation: fadeInSlide 0.5s ease-out forwards;
+            will-change: opacity, transform;
+        }
+        .card.active { display: block; }
+
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .case-file-header {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c94b4b 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+            user-select: none;
+        }
+        .case-file-header h1 { font-size: 28px; margin-bottom: 8px; font-weight: 800; }
+        .case-file-header p { font-size: 14px; opacity: 0.95; }
+
+        .file-icon { font-size: 80px; margin: 20px 0; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .file-details {
+            text-align: left;
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #ff69b4;
+        }
+        .file-details p { margin: 10px 0; font-size: 15px; color: #555; }
+        .file-details strong { color: #ff1493; }
+
+        .problem-header {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+        .problem-header h2 { font-size: 32px; margin-bottom: 12px; font-weight: 800; }
+        .problem-icon { font-size: 70px; margin: 20px 0; }
+
+        .problem-box {
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f0 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 3px dashed #ff69b4;
+            text-align: left;
+        }
+        .problem-box h3 { color: #ff1493; font-size: 22px; margin-bottom: 15px; }
+        .problem-box p { color: #555; font-size: 17px; line-height: 1.8; margin: 10px 0; }
+
+        .symptoms-header {
+            background: linear-gradient(135deg, #c94b4b 0%, #ff6b9d 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .symptoms-header h2 { font-size: 26px; font-weight: 800; }
+
+        .symptom-list {
+            text-align: left;
+            margin: 15px 0;
+            max-height: 450px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
+            scroll-behavior: smooth;
+        }
+        .symptom-list::-webkit-scrollbar { width: 8px; }
+        .symptom-list::-webkit-scrollbar-track { background: #f8f9ff; border-radius: 10px; }
+        .symptom-list::-webkit-scrollbar-thumb { background: #ff69b4; border-radius: 10px; }
+
+        .symptom-item {
+            background: white;
+            border-left: 5px solid #ff69b4;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .symptom-item:hover { transform: translateX(10px); }
+        .symptom-item .emoji { font-size: 28px; margin-right: 10px; }
+        .symptom-item strong { color: #ff1493; font-size: 18px; }
+        .symptom-item p { color: #555; margin-top: 8px; line-height: 1.6; }
+
+        .treatment-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .treatment-header h2 { font-size: 26px; font-weight: 800; }
+
+        .rx-symbol {
+            font-size: 50px;
+            margin: 15px 0;
+            color: #ff1493;
+            font-weight: 900;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .prescription-list {
+            text-align: left;
+            margin: 15px 0;
+            max-height: none;
+            overflow: visible;
+            padding-right: 0;
+        }
+
+        .prescription-item {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe6ec 100%);
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 15px;
+            border: 2px solid #ff69b4;
+        }
+        .prescription-item .dose { font-size: 24px; margin-right: 10px; }
+        .prescription-item strong { color: #ff1493; font-size: 18px; }
+        .prescription-item p { color: #555; margin-top: 8px; font-style: italic; }
+
+        .valentine-header { margin-bottom: 15px; user-select: none; }
+        .valentine-header h2 {
+            font-size: 28px;
+            color: #ff1493;
+            margin: 10px 0;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        .tom-proposing-gif {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            margin: 15px auto;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .button-container {
+            position: relative;
+            min-height: 130px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+            overflow: visible;
+        }
+
+        /* ✅ FIX: default .btn now has the same pink gradient like other buttons */
+        .btn {
+            padding: 14px 45px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.35);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255, 105, 180, 0.5); }
+
+        .next-btn {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+            padding: 16px 45px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+            margin-top: 25px;
+        }
+        .next-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255, 105, 180, 0.5); }
+
+        .btn-yes { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; z-index: 10; }
+        .btn-yes:hover { transform: scale(1.1); box-shadow: 0 12px 30px rgba(76, 175, 80, 0.5); }
+
+        .btn-no-container { position: fixed; z-index: 10000; pointer-events: auto; }
+        .btn-no-placeholder { visibility: hidden; pointer-events: none; }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ff6347 0%, #ff4500 100%);
+            color: white;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: inline-block;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .no-tooltip {
+            position: absolute;
+            background: #ff1493;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
+            z-index: 100;
+            display: none;
+            animation: tooltipPop 0.3s ease;
+        }
+        .no-tooltip.show { display: block; }
+        .no-tooltip.top { bottom: 110%; left: 50%; transform: translateX(-50%); }
+        .no-tooltip.right { left: 110%; top: 50%; transform: translateY(-50%); }
+
+        .no-tooltip::after { content: ''; position: absolute; width: 0; height: 0; }
+        .no-tooltip.top::after {
+            top: 100%; left: 50%; transform: translateX(-50%);
+            border: 8px solid transparent; border-top-color: #ff1493;
+        }
+        .no-tooltip.right::after {
+            right: 100%; top: 50%; transform: translateY(-50%);
+            border: 8px solid transparent; border-right-color: #ff1493;
+        }
+
+        @keyframes tooltipPop {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+
+        .distance-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-dots { display: flex; justify-content: center; gap: 10px; margin-top: 25px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #ddd; transition: all 0.3s ease; }
+        .dot.active { background: #ff69b4; width: 30px; border-radius: 6px; }
+
+        .destinations-grid, .memories-grid { animation: fadeInUp 0.6s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+
+        .destination-card, .memory-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .destination-card:hover, .memory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2) !important;
+        }
+
+        /* ✅ FIX: Destination image frame that ALWAYS fills perfectly */
+        .media-box{
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f8f8;
+            margin-bottom: 12px;
+        }
+        .media-box img{
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;         /* ✅ fills frame */
+            object-position: center;
+            border-radius: 12px;
+            transform: translateZ(0);
+        }
+        .media-box .emoji-badge{
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            z-index: 2;
+            font-size: 20px;
+            background: rgba(255,255,255,0.85);
+            border: 2px solid rgba(255,105,180,0.55);
+            padding: 6px 8px;
+            border-radius: 999px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .destinations-grid { grid-template-columns: 1fr !important; }
+            .destination-card h3, .memory-card h3 { font-size: 16px !important; }
+            .destination-card p, .memory-card p { font-size: 12px !important; }
+        }
+
+        .until-we-meet-content { animation: fadeIn 0.8s ease-out; }
+        @media (max-width: 768px) {
+            .until-we-meet-content > div { padding: 15px !important; }
+            .until-we-meet-content h3 { font-size: 16px !important; }
+            .until-we-meet-content p { font-size: 13px !important; }
+            .until-we-meet-content ul li { font-size: 12px !important; }
+        }
+
+        /* Music control button */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            animation: musicPulse 2s infinite;
+        }
+        .music-control:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6); }
+        .music-control:active { transform: scale(0.95); }
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4); }
+            50% { box-shadow: 0 4px 25px rgba(255, 107, 157, 0.7); }
+        }
+        @media (max-width: 768px) {
+            .music-control { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+        }
+
+        /* ---------- Memory "rose / fan" cards ---------- */
+        .fan-wrap {
+            margin: 18px 0 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .fan {
+            position: relative;
+            width: min(560px, 100%);
+            height: 380px;
+        }
+
+        .fan-card {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 240px;
+            aspect-ratio: 3 / 4;
+            transform-origin: bottom center;
+            border: 4px solid rgba(255,105,180,0.75);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 320ms ease, box-shadow 320ms ease, filter 320ms ease;
+            border-radius: 60% 60% 80% 80% / 28% 28% 82% 82%;
+            background: #f8f8f8;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .fan-card::before {
+            content: "";
+            position: absolute;
+            inset: -25%;
+            background-image: var(--img);
+            background-size: cover;
+            background-position: center;
+            filter: blur(16px) saturate(1.15);
+            opacity: 0.45;
+            transform: scale(1.1);
+        }
+
+        /* ✅ FIX: Memory images fill the frame nicely (no gaps) */
+        .fan-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;           /* ✅ fills shape */
+            object-position: center;
+            padding: 0;                  /* ✅ remove the old padding gap */
+            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.12));
+        }
+
+        .fan-card .label {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: rgba(255,255,255,0.86);
+            border-radius: 14px;
+            padding: 8px 10px;
+            font-size: 12px;
+            color: #444;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            border: 2px solid rgba(255,105,180,0.45);
+        }
+
+        .fan-card[data-i="1"] { transform: translateX(-50%) rotate(-16deg) translateX(-130px) translateY(40px); z-index: 1; }
+        .fan-card[data-i="2"] { transform: translateX(-50%) rotate(0deg) translateY(10px); z-index: 2; }
+        .fan-card[data-i="3"] { transform: translateX(-50%) rotate(16deg) translateX(130px) translateY(40px); z-index: 1; }
+
+        .fan-card.active {
+            z-index: 10 !important;
+            transform: translateX(-50%) rotate(0deg) translateY(-6px) scale(1.08) !important;
+            box-shadow: 0 22px 55px rgba(0,0,0,0.22);
+            filter: saturate(1.05);
+        }
+
+        .fan-hint {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .memory-caption {
+            margin: 14px auto 0;
+            max-width: 560px;
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f0 100%);
+            border: 2px dashed #ff69b4;
+            border-radius: 16px;
+            padding: 14px 16px;
+            text-align: center;
+        }
+        .memory-caption h3 {
+            color: #ff1493;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+        .memory-caption p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 520px) {
+            .fan { height: 340px; }
+            .fan-card { width: 210px; }
+            .fan-card[data-i="1"] { transform: translateX(-50%) rotate(-14deg) translateX(-105px) translateY(40px); }
+            .fan-card[data-i="3"] { transform: translateX(-50%) rotate(14deg) translateX(105px) translateY(40px); }
+        }
+
+        /* ---------- FINAL REEL VIDEO FRAME ---------- */
+        .video-frame {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+        .video-frame::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            background: linear-gradient(135deg, #ff6b9d, #c06c84, #f67280);
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .video-frame video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            border-radius: 25px;
+        }
+
+        /* ✅ iPad 13-inch tuning (Safari/Chrome): 1024×1366 */
+        @media (min-width: 820px) and (max-width: 1366px) {
+            body { padding: 18px; }
+            .card-container {
+                max-width: 720px;
+                width: 92%;
+                max-height: 86vh;
+                padding: 34px 44px;
+            }
+            .card-container.wide {
+                max-width: 860px;
+                width: 94%;
+                max-height: 86vh;
+                padding: 30px 44px;
+            }
+            .fan { height: 420px; }
+            .video-frame { max-width: 460px; }
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- Background Music -->
+<audio id="backgroundMusic" loop autoplay playsinline>
+    <source src="music/background.mp3" type="audio/mpeg">
+    <source src="music/background.ogg" type="audio/ogg">
+    Your browser does not support the audio element.
+</audio>
+
+<!-- Music Control Button -->
+<button class="music-control tap-bounce" id="musicControl" onclick="toggleMusic()" title="Toggle Music">🎵</button>
+
+<!-- Background animations -->
+<div class="background-animations">
+    <img src="https://media.giphy.com/media/WnhcDWYgu6fHXZtVph/giphy.gif" class="floating-emoji" style="top: 10%; left: 5%; animation-delay: 0s; width: 180px; height: auto; border-radius: 15px;" alt="panda proposing">
+    <img src="https://media.giphy.com/media/xR5cPyPoL5HVXSphqA/giphy.gif" class="floating-emoji" style="bottom: 15%; left: 8%; animation-delay: 3s; width: 170px; height: auto; border-radius: 15px;" alt="pandas kissing">
+    <img src="https://media.giphy.com/media/1wmOyZYoGzz003R03Y/giphy.gif" class="floating-emoji" style="top: 20%; right: 8%; animation-delay: 2s; width: 160px; height: auto; border-radius: 15px;" alt="tom jerry proposing">
+    <img src="https://media.giphy.com/media/hpQcDH5EfJRwxm03Uh/giphy.gif" class="floating-emoji" style="bottom: 20%; right: 10%; animation-delay: 4s; width: 190px; height: auto; border-radius: 15px;" alt="mickey minnie kiss">
+    <img src="https://media.giphy.com/media/enrq327a3sMIJAS5jA/giphy.gif" class="floating-emoji" style="top: 50%; right: 5%; animation-delay: 1.5s; width: 150px; height: auto; border-radius: 15px;" alt="tom admiring">
+</div>
+
+<!-- Floating hearts background -->
+<div class="hearts-background" id="heartsBackground"></div>
+
+<!-- Easter egg overlay -->
+<div class="egg-overlay" id="eggOverlay">
+    <div class="egg-card tap-bounce">
+        <button class="egg-close" onclick="closeEgg()">✕</button>
+        <div style="font-size: 46px; margin-bottom: 8px;">🫀💌</div>
+        <h3>Secret Diagnosis Found</h3>
+        <p>
+            <strong>Condition:</strong> “Cute Aggression Syndrome” 😤💕<br>
+            <strong>Trigger:</strong> Your face + your voice notes.<br><br>
+            Prescription: <em>One</em> forehead kiss… and then I’ll “accidentally” ask for 99 more. 😌
+        </p>
+        <button class="next-btn tap-bounce" style="margin-top: 16px;" onclick="closeEgg()">Okay doctor, noted 😳</button>
+    </div>
+</div>
+
+<!-- Main card container -->
+<div class="card-container" id="cardContainer">
+
+    <!-- CARD 1 -->
+    <div class="card active" id="card1">
+        <div class="case-file-header" id="caseHeader">
+            <h1>📋 CONFIDENTIAL PATIENT FILE 📋</h1>
+            <p>Medical Records Department - Cardiology Division</p>
+            <p style="font-size: 12px; opacity: 0.95; margin-top: 8px;">
+                <span style="background: rgba(255,255,255,0.18); padding: 6px 10px; border-radius: 999px;">
+                    🤫 Tip: Long-press this header for a “secret note”
+                </span>
+            </p>
+        </div>
+
+        <div class="file-icon">📁</div>
+
+        <div class="file-details">
+            <p><strong>👨‍💻 Patient Name:</strong> Mahesh (Software Developer, USA )</p>
+            <p><strong>👩‍⚕️ Attending Physician:</strong> Dr. Rishitha (India )</p>
+            <p><strong>📅 File Date:</strong> February 14, 2026 - Valentine's Day</p>
+            <p><strong>🚨 Status:</strong> <span style="color: red; font-weight: bold;">CRITICAL - URGENT ATTENTION REQUIRED</span></p>
+            <p><strong>📍 Distance:</strong> 7,456 miles across continents</p>
+            <p><strong>🏥 Department:</strong> Long Distance Love Syndrome Unit</p>
+        </div>
+
+        <button class="next-btn tap-bounce" onclick="nextCard(2)">🔓 Open Case File</button>
+
+        <div class="progress-dots">
+            <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card" id="card2">
+        <div class="problem-header">
+            <h2>🩺 CHIEF COMPLAINT</h2>
+            <p>
+                <span class="typewriter" style="--tw-duration: 3.3s; --tw-steps: 42;">
+                    Primary Diagnosis: “She’s living rent-free in my head.”
+                </span>
+            </p>
+
+            <div class="ecg-wrap">
+                <div class="ecg-grid"></div>
+                <div class="ecg-label">ECG: Mahesh • Status: Thinking of Rishitha</div>
+                <div class="ecg-heart">💗</div>
+                <div class="ecg-line" aria-hidden="true">
+                    <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+                        <path d="M0,110 L60,110 L85,110 L95,110 L110,110
+                                 L125,110 L140,110 L155,110
+                                 L170,110 L185,110
+                                 L200,110 L215,110
+                                 L230,110
+                                 L240,110 L250,60 L260,150 L270,110
+                                 L300,110 L330,110
+                                 L360,110 L390,110
+                                 L420,110
+                                 L440,110 L450,80 L460,160 L470,110
+                                 L520,110
+                                 L560,110 L575,110
+                                 L600,110
+                                 L620,110 L632,95 L640,140 L650,110
+                                 L700,110 L740,110 L800,110"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-icon">💔➡️💖</div>
+
+        <div class="problem-box">
+            <h3>🔬 Initial Assessment:</h3>
+            <p><strong>Condition:</strong> Acute "Long Distance Love Syndrome" (LDLS) with severe complications</p>
+            <p><strong>Onset:</strong> Since one doctor in India 🇮🇳 started “treating” me with her smile… and now I’m officially addicted</p>
+            <p><strong>Severity:</strong> Critical — heart rate spikes whenever her name pops up (which is… always). Symptoms include random smiling, “one more call” addiction, and pretending to work while missing her. 😌</p>
+            <p><strong>Prognosis:</strong> Worsening daily. Patient shows signs of emotional dependency + uncontrollable “I miss you” energy. Immediate intervention required! ❤️</p>
+        </div>
+
+        <div class="distance-badge">🌍 Distance: 7,456 miles | Time Zones: Multiple | Love: Infinite ∞</div>
+
+        <button class="next-btn tap-bounce" onclick="nextCard(3)">📊 View Detailed Symptoms</button>
+
+        <div class="progress-dots">
+            <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card" id="card3">
+        <div class="symptoms-header">
+            <h2>💊 DOCUMENTED SYMPTOMS 💊</h2>
+            <p>Complete Clinical Manifestations</p>
+        </div>
+
+        <div class="symptom-list">
+            <div class="symptom-item">
+                <span class="emoji">💓</span>
+                <strong>Tachycardia Amoris (Racing Heart Syndrome)</strong>
+                <p>Heart beats 10x faster whenever I see your messages, photos, or even think about you. The only cure is… you. 😳</p>
+            </div>
+
+            <div class="symptom-item">
+                <span class="emoji">🌙</span>
+                <strong>Insomnia Desiderium (Can't Sleep Missing You)</strong>
+                <p>Severe inability to sleep because my brain keeps replaying your laugh… like a 4K loop. Time zones make it worse. 😴💕</p>
+            </div>
+
+            <div class="symptom-item">
+                <span class="emoji">🥰</span>
+                <strong>Hallucinatio Dulcis (Sweet Hallucinations)</strong>
+                <p>I see your face everywhere — clouds, coffee, even in my code… (now every bug feels personal). 💘</p>
+            </div>
+
+            <div class="symptom-item">
+                <span class="emoji">😊</span>
+                <strong>Risus Stupidus (Stupid Smile Disorder)</strong>
+                <p>Uncontrollable smiling whenever phone buzzes. Colleagues think I’m crazy. They’re right. 😁💖</p>
+            </div>
+
+            <div class="symptom-item">
+                <span class="emoji">🧠</span>
+                <strong>Cerebral Obsessio (Brain Takeover)</strong>
+                <p>97% of brain capacity: you. Remaining 3%: also you… but in a different mood. Highly dangerous. Feels amazing. 🥴💕</p>
+            </div>
+
+            <div class="symptom-item">
+                <span class="emoji">⏰</span>
+                <strong>Tempus Confusio (Timezone Confusion Syndrome)</strong>
+                <p>My clock is permanently set to “Rishitha Standard Time” (RST) — the only timezone that matters.🕐❤️</p>
+            </div>
+        </div>
+
+        <button class="next-btn tap-bounce" onclick="nextCard(4)">💉 View Treatment Plan</button>
+
+        <div class="progress-dots">
+            <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="card" id="card4">
+        <div class="treatment-header">
+            <h2>💊 PRESCRIBED TREATMENT PLAN 💊</h2>
+            <p>
+                <span class="typewriter" style="--tw-duration: 3.1s; --tw-steps: 40;">
+                    Administered by Dr. Rishitha ONLY (no substitutes)
+                </span>
+            </p>
+            <p style="font-size: 14px; margin-top: 10px; opacity: 0.9;">
+                🎭 Plot twist: the doctor reading this caused the condition… and she’s the only cure. 😌💗
+            </p>
+
+            <div class="ecg-wrap" style="max-width: 560px;">
+                <div class="ecg-grid"></div>
+                <div class="ecg-label">Vitals: Stabilizing… when she says “Hi”</div>
+                <div class="ecg-heart">💞</div>
+                <div class="ecg-line" aria-hidden="true" style="animation-duration: 2.2s;">
+                    <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+                        <path d="M0,110 L80,110 L110,110
+                                 L140,110
+                                 L170,110 L185,75 L195,150 L205,110
+                                 L250,110 L300,110
+                                 L330,110 L345,90 L355,145 L365,110
+                                 L420,110 L470,110
+                                 L500,110 L512,60 L522,155 L532,110
+                                 L600,110 L680,110 L800,110"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="rx-symbol">Rx</div>
+
+        <div class="prescription-list">
+            <div class="prescription-item">
+                <span class="dose">💋💋</span>
+                <strong>Osculum Therapy (Kiss Treatment)</strong>
+                <p>Dosage: 100 kisses daily (when we meet). Side effects: addiction, bragging, and a permanent “this is mine” smile. 😘</p>
+            </div>
+
+            <div class="prescription-item">
+                <span class="dose">📞❤️</span>
+                <strong>Video Call Vitamins</strong>
+                <p>Unlimited calls with Rishitha. Warning: May cause “one more minute” syndrome and heavy blushing. 📱💕</p>
+            </div>
+
+            <div class="prescription-item">
+                <span class="dose">🤗🤗</span>
+                <strong>Amplexus Treatment (Hug Therapy)</strong>
+                <p>2 warm hugs morning, 3 tight hugs evening, 1 all-night cuddle session before bed. Repeat forever. 🥰</p>
+            </div>
+
+            <div class="prescription-item">
+                <span class="dose">💬∞</span>
+                <strong>"I Love You" Supplements</strong>
+                <p>Minimum 50 daily. Bonus points: voice notes, surprise “thinking of you” messages, and that one cute emoji you do. 💖</p>
+            </div>
+
+            <div class="prescription-item">
+                <span class="dose">✈️🏡</span>
+                <strong>Distance Elimination Surgery</strong>
+                <p> Schedule “Distance Removal Surgery”. Surgeon: Fate. Assistant Surgeon: Me. Patient: Us. Result: permanent togetherness. 🌍➡️❤️</p>
+            </div>
+
+            <div class="prescription-item">
+                <span class="dose">💍💕</span>
+                <strong>Eternitas Amoris (Forever Love Injection)</strong>
+                <p>One lifetime supply of partnership, laughter, and being each other’s Valentine. 👫💖</p>
+            </div>
+        </div>
+
+        <button class="next-btn tap-bounce" onclick="nextCard(5)">💝 Doctor's Decision Required</button>
+
+        <div class="progress-dots">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="card" id="card5">
+        <div class="valentine-header">
+            <h2>Will You Be My Valentine?</h2>
+            <p style="font-size: 14px; color: #555; margin-top: 8px;">
+                Dr. Rishitha… the patient’s life depends on your answer. 💕
+            </p>
+            <p style="font-size: 12px; color: #777; margin-top: 8px;">
+                (Also… if you tap “No”, the button gets scared and runs away. 😌)
+            </p>
+        </div>
+
+        <img src="https://media.giphy.com/media/orU4txbRZIp6vJheJ9/giphy.gif" class="tom-proposing-gif" alt="Tom proposing with ring">
+
+        <div class="problem-box" style="margin-top: 15px; padding: 15px;">
+            <p style="text-align: center; font-size: 15px; color: #ff1493; margin-bottom: 8px;"><strong>⚠️ CRITICAL DECISION REQUIRED ⚠️</strong></p>
+            <p style="text-align: center; font-size: 14px;">Mahesh from USA 🇺🇸 needs your answer...</p>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-yes tap-bounce" onclick="handleYes()">YES 💖 (Fine… I’ll save the patient 😌)</button>
+
+            <div class="btn-no-placeholder" id="noPlaceholder">
+                <span style="color: transparent; padding: 14px 45px; font-size: 18px;">No 😢</span>
+            </div>
+        </div>
+
+        <div class="progress-dots" style="margin-top: 20px;">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="card" id="card6">
+        <div class="valentine-header">
+            <h2>🌍 Our Dream Adventures Together 💕</h2>
+            <p style="font-size: 14px; color: #555; margin-top: 8px;">
+                Now that you said YES, let's dream about the places we'll explore hand in hand...
+            </p>
+        </div>
+
+        <div class="destinations-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; padding: 0 10px;">
+            <div class="destination-card" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="media-box">
+                    <span class="emoji-badge">🗼</span>
+                    <img src="images/paris.jpg" alt="Paris">
+                </div>
+                <h3 style="font-size: 18px; color: #d63031; margin: 8px 0;">Paris 🇫🇷</h3>
+                <p style="font-size: 12px; color: #2d3436; line-height: 1.4;">Walking under the Eiffel Tower, stealing kisses by the Seine 💋</p>
+            </div>
+
+            <div class="destination-card" style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="media-box">
+                    <span class="emoji-badge">🏔️</span>
+                    <img src="images/switzerland.jpg" alt="Switzerland">
+                </div>
+                <h3 style="font-size: 18px; color: #0984e3; margin: 8px 0;">Switzerland 🇨🇭</h3>
+                <p style="font-size: 12px; color: #2d3436; line-height: 1.4;">Snow-capped mountains, cozy chalets, and warm cuddles ❄️💕</p>
+            </div>
+
+            <div class="destination-card" style="background: linear-gradient(135deg, #81ecec 0%, #55efc4 100%); padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="media-box">
+                    <span class="emoji-badge">🏝️</span>
+                    <img src="images/maldives.jpg" alt="Maldives">
+                </div>
+                <h3 style="font-size: 18px; color: #00b894; margin: 8px 0;">Maldives 🇲🇻</h3>
+                <p style="font-size: 12px; color: #2d3436; line-height: 1.4;">Crystal blue waters, private beaches, just us 🌊💑</p>
+            </div>
+
+            <div class="destination-card" style="background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%); padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="media-box">
+                    <span class="emoji-badge">🌅</span>
+                    <img src="images/santorini.jpg" alt="Santorini">
+                </div>
+                <h3 style="font-size: 18px; color: #e17055; margin: 8px 0;">Santorini 🇬🇷</h3>
+                <p style="font-size: 12px; color: #2d3436; line-height: 1.4;">Watching sunsets together, white houses & blue domes 🌇✨</p>
+            </div>
+        </div>
+
+        <div class="problem-box" style="margin: 15px 0; padding: 15px;">
+            <p style="text-align: center; font-size: 14px; color: #ff1493;"><strong>💭 "Distance is temporary, but our dreams are forever!" 💭</strong></p>
+        </div>
+
+        <button class="btn tap-bounce" style="margin-top: 15px;" onclick="nextCard(7)">See Our Memories & Dreams 💕📸</button>
+
+        <div class="progress-dots" style="margin-top: 20px;">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="card" id="card7">
+        <div class="valentine-header">
+            <h2>📸 Us - Then, Now & Forever 💑</h2>
+            <p style="font-size: 14px; color: #555; margin-top: 8px;">Tap a card to “peek” it open 😌</p>
+        </div>
+
+        <div class="fan-wrap">
+            <div class="fan" id="fan">
+                <div class="fan-card tap-bounce active" data-i="2" data-title="Special Moments 🎊" data-desc="Every celebration is special because you’re in it 💖"
+                     style="--img: url('images/memory2.jpg');">
+                    <img src="images/memory2.jpg" alt="Memory 2">
+                    <div class="label">Tap me 💕</div>
+                </div>
+
+                <div class="fan-card tap-bounce" data-i="1" data-title="Our Beginning 🌟" data-desc="The moment I knew you were the one for me ❤️"
+                     style="--img: url('images/memory1.jpg');">
+                    <img src="images/memory1.jpg" alt="Memory 1">
+                    <div class="label">Peek 👀</div>
+                </div>
+
+                <div class="fan-card tap-bounce" data-i="3" data-title="Our Future 🔮" data-desc="A lifetime of love, laughter, and adventures awaits us 💑✨"
+                     style="--img: url('images/memory3.jpg');">
+                    <img src="images/memory3.jpg" alt="Memory 3">
+                    <div class="label">Open ✨</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fan-hint">✨ Casino-style “vichukovadam” vibe: tap each card to bring it forward.</div>
+
+        <div class="memory-caption" id="memoryCaption">
+            <h3 id="memTitle">Special Moments 🎊</h3>
+            <p id="memDesc">Every celebration is special because you’re in it 💖</p>
+        </div>
+
+        <button class="btn tap-bounce" style="margin-top: 18px;" onclick="nextCard(8)">One More Thing... 💕</button>
+
+        <div class="progress-dots" style="margin-top: 20px;">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+    </div>
+
+    <!-- CARD 8 -->
+    <div class="card" id="card8">
+        <div class="valentine-header">
+            <h2>💑 Until We Meet Again... 🌏</h2>
+            <p style="font-size: 14px; color: #555; margin-top: 8px;">Distance means so little when you mean so much</p>
+        </div>
+
+        <div class="until-we-meet-content" style="padding: 20px 15px;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <div style="font-size: 40px; margin-bottom: 10px;">🌍</div>
+                <h3 style="font-size: 20px; margin-bottom: 15px;">USA 🇺🇸 ↔️ India 🇮🇳</h3>
+                <p style="font-size: 16px; line-height: 1.6;">
+                    <strong>7,456 miles</strong> between us<br>
+                    But <strong>ZERO distance</strong> in our hearts ❤️
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <div style="font-size: 40px; margin-bottom: 10px;">⏰</div>
+                <h3 style="font-size: 18px; margin-bottom: 12px;">Counting Down The Days</h3>
+                <p style="font-size: 14px; line-height: 1.6; margin-bottom: 15px;">
+                    Every video call, every message, every "I miss you"<br>
+                    brings us closer to the day we'll be together again 💕
+                </p>
+                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 10px; backdrop-filter: blur(10px);">
+                    <p style="font-size: 15px; font-weight: bold;">
+                        Until then, I'll be here...<br>
+                        Missing you, loving you, waiting for you 💖
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <h3 style="font-size: 18px; color: #2d3436; text-align: center; margin-bottom: 15px;">📝 Our Daily Prescription:</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 10px; margin-bottom: 8px; background: white; border-radius: 8px; font-size: 13px;">💊 Morning: Good morning text with 3 kisses minimum</li>
+                    <li style="padding: 10px; margin-bottom: 8px; background: white; border-radius: 8px; font-size: 13px;">📞 Evening: Video call for heart stabilization</li>
+                    <li style="padding: 10px; margin-bottom: 8px; background: white; border-radius: 8px; font-size: 13px;">💕 Night: "I love you" before sleep (mandatory!)</li>
+                    <li style="padding: 10px; background: white; border-radius: 8px; font-size: 13px;">∞ All day: Random "thinking about you" messages</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="https://media.giphy.com/media/enrq327a3sMIJAS5jA/giphy.gif" style="max-width: 200px; height: auto; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Tom admiring photo">
+                <p style="margin-top: 10px; font-size: 13px; color: #636e72; font-style: italic;">Me, every time I look at your photos 😍</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%); padding: 25px; border-radius: 15px; text-align: center; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <div style="font-size: 50px; margin-bottom: 15px;">❤️</div>
+                <h3 style="font-size: 22px; margin-bottom: 15px;">To My Valentine, Rishitha 💕</h3>
+                <p style="font-size: 15px; line-height: 1.8;">
+                    Thank you for being the only doctor who makes the patient worse…<br>
+                    because I fall harder every day. 😌💗<br><br>
+                    And yes… I’m happily “not cured.”<br>
+                    No matter the distance, no matter the time zones,<br>
+                    my heart will always find its way to yours.<br><br>
+                    <strong style="font-size: 18px;">Happy Valentine's Day ❤️</strong><br><br>
+                    Forever yours,<br>
+                    <strong>Mahesh 💕</strong>
+                </p>
+            </div>
+            <button class="next-btn tap-bounce" onclick="nextCard(9)">🎬 Final Evidence</button>
+        </div>
+
+        <div class="progress-dots" style="margin-top: 20px;">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+    </div>
+
+    <!-- CARD 9 -->
+    <div class="card" id="card9">
+        <div class="valentine-header">
+            <h2>🎬 Final Medical Evidence 💕</h2>
+            <p style="font-size: 14px; color: #555; margin-top: 8px;">
+                Doctor… please review this confidential recovery footage.
+            </p>
+        </div>
+
+        <div style="margin: 20px 0; text-align: center;">
+            <div class="video-frame">
+                <video id="finalVideo" controls playsinline>
+                    <source src="videos/neeve-neeve-reel.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="problem-box" style="margin-top: 20px; text-align: center;">
+            <p style="font-size: 16px; color: #ff1493;">
+                Diagnosis confirmed…
+            </p>
+            <p style="font-size: 15px;">
+                I don’t need a cure.<br>
+                I need you in every version of my life.<br><br>
+                From long-distance calls…<br>
+                to dancing next to you for real. 😌❤️
+            </p>
+        </div>
+
+        <button class="next-btn tap-bounce" onclick="showFinalMessage()">
+            💖 Close The File Forever
+        </button>
+    </div>
+</div>
+
+<!-- NO button outside card container -->
+<div class="btn-no-container" id="noBtnContainer" style="display: none;">
+    <button class="btn btn-no tap-bounce" id="noBtn">No 😢</button>
+    <div class="no-tooltip top" id="noTooltip"></div>
+</div>
+
+<script>
+
+    function showFinalMessage() {
+        const container = document.getElementById('card9');
+
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ff6b9d, #c06c84);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    animation: fadeIn 0.5s ease-in;
+    color: white;
+    z-index: 999;
+  `;
+
+        overlay.innerHTML = `
+    <div style="font-size: 60px;">❤️</div>
+    <h1 style="font-size: 32px; margin: 15px 0;">Case Closed.</h1>
+    <p style="font-size: 18px; line-height: 1.6;">
+      Not cured.<br>
+      Not recovering.<br><br>
+      Permanently yours. 😌
+    </p>
+    <p style="margin-top: 20px; font-size: 14px;">— Mahesh</p>
+  `;
+
+        container.style.position = "relative";
+        container.appendChild(overlay);
+    }
+
+    /* ---------- Touch / Vibration helpers ---------- */
+    function vibe(pattern = 20) {
+        try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
+    }
+    function shakeScreen() {
+        const el = document.getElementById('cardContainer');
+        if (!el) return;
+        el.classList.remove('screen-shake');
+        void el.offsetWidth;
+        el.classList.add('screen-shake');
+        setTimeout(() => el.classList.remove('screen-shake'), 500);
+    }
+
+    /* ---------- Background Music Control ---------- */
+    let musicPlaying = false;
+    const bgMusic = document.getElementById('backgroundMusic');
+    const musicControl = document.getElementById('musicControl');
+
+    // Start muted (autoplay-friendly) then attempt to unmute smoothly
+    bgMusic.volume = 0.0;
+    bgMusic.muted = true;
+
+    async function tryAutoplayNow() {
+        try {
+            await bgMusic.play();
+            musicPlaying = true;
+            musicControl.textContent = '🎵';
+            musicControl.style.animation = 'musicPulse 2s infinite';
+
+            setTimeout(() => {
+                try {
+                    bgMusic.muted = false;
+                    const target = 0.4;
+                    let v = 0;
+                    const step = () => {
+                        v += 0.03;
+                        bgMusic.volume = Math.min(target, v);
+                        if (v < target) requestAnimationFrame(step);
+                    };
+                    requestAnimationFrame(step);
+                } catch (e) {}
+            }, 450);
+
+        } catch (e) {
+            musicPlaying = false;
+            musicControl.textContent = '🔇';
+            musicControl.style.animation = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        tryAutoplayNow();
+    });
+
+    function setMusicUI(isOn){
+        musicControl.textContent = isOn ? '🎵' : '🔇';
+        musicControl.style.animation = isOn ? 'musicPulse 2s infinite' : 'none';
+    }
+
+    function toggleMusic() {
+        vibe(15);
+        if (musicPlaying) {
+            bgMusic.pause();
+            musicPlaying = false;
+            setMusicUI(false);
+        } else {
+            bgMusic.muted = false;
+            bgMusic.volume = 0.4;
+            bgMusic.play().catch(() => {});
+            musicPlaying = true;
+            setMusicUI(true);
+        }
+    }
+
+    async function unlockAudioOnce() {
+        try {
+            bgMusic.muted = false;
+            if (!musicPlaying) {
+                bgMusic.volume = 0.4;
+                await bgMusic.play();
+                musicPlaying = true;
+                setMusicUI(true);
+            }
+        } catch (e) {}
+        document.removeEventListener('click', unlockAudioOnce);
+        document.removeEventListener('touchstart', unlockAudioOnce);
+    }
+    document.addEventListener('click', unlockAudioOnce, { once: true });
+    document.addEventListener('touchstart', unlockAudioOnce, { once: true, passive: true });
+
+    /* ✅ FIX: Pause background music when final video plays (and resume later) */
+    let musicWasPlayingBeforeVideo = false;
+
+    function wireVideoAudioBehavior(){
+        const video = document.getElementById('finalVideo');
+        if (!video) return;
+
+        video.addEventListener('play', () => {
+            musicWasPlayingBeforeVideo = musicPlaying;
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                setMusicUI(false);
+            }
+        });
+
+        video.addEventListener('pause', () => {
+            if (musicWasPlayingBeforeVideo) {
+                bgMusic.muted = false;
+                bgMusic.volume = 0.4;
+                bgMusic.play().then(() => {
+                    musicPlaying = true;
+                    setMusicUI(true);
+                }).catch(() => {});
+                musicWasPlayingBeforeVideo = false;
+            }
+        });
+
+        video.addEventListener('ended', () => {
+            if (musicWasPlayingBeforeVideo) {
+                bgMusic.muted = false;
+                bgMusic.volume = 0.4;
+                bgMusic.play().then(() => {
+                    musicPlaying = true;
+                    setMusicUI(true);
+                }).catch(() => {});
+                musicWasPlayingBeforeVideo = false;
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', wireVideoAudioBehavior);
+
+    /* ---------- Card navigation ---------- */
+    let currentCard = 1;
+
+    function nextCard(cardNumber) {
+        vibe(10);
+
+        document.getElementById('card' + currentCard).classList.remove('active');
+        currentCard = cardNumber;
+        document.getElementById('card' + cardNumber).classList.add('active');
+
+        const cardContainer = document.querySelector('.card-container');
+        cardContainer.scrollTop = 0;
+
+        if (cardNumber === 5) {
+            cardContainer.classList.add('wide');
+            setTimeout(() => initializeNoButton(), 120);
+        } else {
+            cardContainer.classList.remove('wide');
+            const noBtnContainer = document.getElementById('noBtnContainer');
+            if (noBtnContainer) noBtnContainer.style.display = 'none';
+        }
+
+        if (cardNumber === 7) {
+            setTimeout(() => {
+                const active = document.querySelector('.fan-card.active') || document.querySelector('.fan-card[data-i="2"]');
+                if (active) setMemoryActive(active, false);
+            }, 100);
+        }
+
+        if (cardNumber === 9) {
+            setTimeout(() => wireVideoAudioBehavior(), 100);
+        }
+    }
+
+    function initializeNoButton() {
+        const noBtnContainer = document.getElementById('noBtnContainer');
+        const placeholder = document.getElementById('noPlaceholder');
+        if (!noBtnContainer || !placeholder) return;
+
+        const rect = placeholder.getBoundingClientRect();
+        noBtnContainer.style.display = 'block';
+        noBtnContainer.style.left = (rect.left + rect.width / 2) + 'px';
+        noBtnContainer.style.top = (rect.top + rect.height / 2) + 'px';
+        noBtnContainer.style.transform = 'translate(-50%, -50%)';
+        isNoButtonMoving = false;
+    }
+
+    /* ---------- Floating hearts ---------- */
+    function createHearts() {
+        const heartsContainer = document.getElementById('heartsBackground');
+        const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💘', '💓', '💞'];
+
+        for (let i = 0; i < 25; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
+                heartsContainer.appendChild(heart);
+            }, i * 200);
+        }
+    }
+    createHearts();
+
+    setInterval(() => {
+        const heartsContainer = document.getElementById('heartsBackground');
+        if (heartsContainer.children.length < 40) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💘', '💓', '💞'];
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            heartsContainer.appendChild(heart);
+        }
+    }, 2000);
+
+    /* ---------- NO button logic ---------- */
+    const tooltipMessages = [
+        "⚠️ Patient will die of heartbreak! 💔",
+        "❌ This option is medically inadvisable!",
+        "🚨 DANGER: Heart failure imminent!",
+        "💔 Doctor, please reconsider!",
+        "⚠️ Patient's vitals dropping!",
+        "🩺 This violates the Hippocratic Oath!",
+        "💊 Side effects: Eternal sadness",
+        "🚑 Emergency! Don't click here!",
+        "❤️‍🩹 His heart can't take rejection!",
+        "🩹 This will require major surgery!",
+        "⛔ NO is not an option here!",
+        "💉 This button is toxic!",
+        "🏥 Patient needs immediate YES!",
+        "💝 Love is the only cure!",
+        "😢 Please say YES instead!"
+    ];
+    let tooltipIndex = 0;
+    let noTooltipTimeout;
+
+    const noBtn = document.getElementById('noBtn');
+    const noBtnContainer = document.getElementById('noBtnContainer');
+    const noTooltip = document.getElementById('noTooltip');
+
+    let isNoButtonMoving = false;
+
+    function moveNoButtonAway(x, y) {
+        if (!noBtn || !noBtnContainer || isNoButtonMoving || currentCard !== 5) return;
+
+        const btnRect = noBtn.getBoundingClientRect();
+        const btnCenterX = btnRect.left + btnRect.width / 2;
+        const btnCenterY = btnRect.top + btnRect.height / 2;
+
+        const distance = Math.sqrt(Math.pow(x - btnCenterX, 2) + Math.pow(y - btnCenterY, 2));
+
+        const triggerDistance = 140;
+        if (distance < triggerDistance) {
+            isNoButtonMoving = true;
+
+            vibe([10, 20, 10]);
+
+            const angle = Math.atan2(btnCenterY - y, btnCenterX - x);
+
+            let newX = btnCenterX + Math.cos(angle) * 300;
+            let newY = btnCenterY + Math.sin(angle) * 300;
+
+            const margin = 110;
+            newX = Math.max(margin, Math.min(window.innerWidth - margin, newX));
+            newY = Math.max(margin, Math.min(window.innerHeight - margin, newY));
+
+            noBtnContainer.style.left = newX + 'px';
+            noBtnContainer.style.top = newY + 'px';
+            noBtnContainer.style.transform = 'translate(-50%, -50%)';
+
+            noTooltip.textContent = tooltipMessages[tooltipIndex % tooltipMessages.length];
+            noTooltip.classList.add('show');
+            tooltipIndex++;
+
+            noTooltip.classList.remove('top', 'right');
+            noTooltip.classList.add(Math.random() > 0.5 ? 'top' : 'right');
+
+            setTimeout(() => { isNoButtonMoving = false; }, 350);
+        }
+    }
+
+    document.addEventListener('mousemove', (e) => { if (currentCard === 5) moveNoButtonAway(e.clientX, e.clientY); });
+
+    document.addEventListener('touchmove', (e) => {
+        if (currentCard !== 5) return;
+        if (!e.touches || !e.touches.length) return;
+        const t = e.touches[0];
+        moveNoButtonAway(t.clientX, t.clientY);
+    }, { passive: true });
+
+    noBtn.addEventListener('mouseenter', () => {
+        clearTimeout(noTooltipTimeout);
+        noTooltip.textContent = tooltipMessages[tooltipIndex % tooltipMessages.length];
+        noTooltip.classList.add('show');
+        tooltipIndex++;
+        noTooltip.classList.remove('top', 'right');
+        noTooltip.classList.add(Math.random() > 0.5 ? 'top' : 'right');
+    });
+
+    noBtn.addEventListener('mouseleave', () => { noTooltipTimeout = setTimeout(() => noTooltip.classList.remove('show'), 300); });
+
+    noBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        vibe([30, 40, 30]);
+        shakeScreen();
+
+        const messages = [
+            "⚠️ MEDICAL EMERGENCY: This button is disabled for patient safety!",
+            "🚨 CRITICAL: Only YES can save the patient!",
+            "💔 ERROR 404: NO not found in this love story!"
+        ];
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+    });
+
+    /* ---------- YES button ---------- */
+    function handleYes() {
+        vibe([25, 40, 25, 80, 30, 120, 40]);
+
+        const heartsContainer = document.getElementById('heartsBackground');
+        const explosionCount = 120;
+
+        for (let i = 0; i < explosionCount; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.textContent = ['💖', '💕', '💗', '💝', '❤️', '💞'][Math.floor(Math.random() * 6)];
+                heart.style.position = 'fixed';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.fontSize = (25 + Math.random() * 35) + 'px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.willChange = 'transform, opacity';
+
+                const angle = (Math.PI * 2 * i) / explosionCount;
+                const velocity = 4 + Math.random() * 9;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+
+                heartsContainer.appendChild(heart);
+
+                let opacity = 1, posX = 0, posY = 0, rotation = 0, frame = 0;
+                const maxFrames = 110;
+
+                function animateHeart() {
+                    if (frame >= maxFrames) { heart.remove(); return; }
+                    opacity -= 0.01;
+                    posX += tx; posY += ty; rotation += 6;
+                    heart.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotation}deg)`;
+                    heart.style.opacity = opacity;
+                    frame++;
+                    requestAnimationFrame(animateHeart);
+                }
+                requestAnimationFrame(animateHeart);
+            }, i * 8);
+        }
+
+        setTimeout(() => {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = '-50px';
+                    sparkle.style.fontSize = '30px';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '1000';
+                    sparkle.style.willChange = 'transform';
+                    document.body.appendChild(sparkle);
+
+                    let posY = -50;
+                    const fallSpeed = 3 + Math.random() * 4;
+
+                    function animateSparkle() {
+                        posY += fallSpeed;
+                        sparkle.style.transform = `translateY(${posY}px)`;
+                        if (posY < window.innerHeight) requestAnimationFrame(animateSparkle);
+                        else sparkle.remove();
+                    }
+                    requestAnimationFrame(animateSparkle);
+                }, i * 35);
+            }
+        }, 420);
+
+        setTimeout(() => {
+            const card5 = document.getElementById('card5');
+            const successOverlay = document.createElement('div');
+
+            successOverlay.style.cssText = `
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 100;
+                border-radius: 20px;
+                animation: fadeIn 0.5s ease-in;
+                padding: 20px;
+                text-align: center;
+                overflow: hidden;
+            `;
+
+            successOverlay.innerHTML = `
+                <div class="stamp approve" id="docStamp">
+                    <div class="stamp-inner">
+                        <div class="stamp-text">
+                            <div class="big">APPROVED</div>
+                            <span class="small">Dr. Rishitha</span>
+                            <span class="small">Rx: Valentine ✅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size: 80px; margin-bottom: 20px; animation: pulse 1s infinite;">💖</div>
+                <h1 style="color: white; font-size: 42px; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    SHE SAID YES!
+                </h1>
+                <div style="font-size: 30px; margin-bottom: 14px;">🎉 TREATMENT APPROVED! 🎉</div>
+                <p style="color: white; font-size: 20px; line-height: 1.6; max-width: 520px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+                    Patient condition: <strong>stable</strong> ✅<br>
+                    Side effects: nonstop smiling ✅<br><br>
+                    Rishitha… you’re literally the cure. 😌❤️
+                </p>
+            `;
+
+            card5.style.position = 'relative';
+            card5.appendChild(successOverlay);
+
+            setTimeout(() => {
+                const stamp = document.getElementById('docStamp');
+                if (stamp) stamp.classList.add('slam');
+                vibe([15, 35, 15, 70]);
+            }, 130);
+
+            if (!document.getElementById('pulseAnimation')) {
+                const style = document.createElement('style');
+                style.id = 'pulseAnimation';
+                style.textContent = `
+                    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+                    @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+                `;
+                document.head.appendChild(style);
+            }
+
+            setTimeout(() => { successOverlay.remove(); nextCard(6); }, 3000);
+        }, 1900);
+    }
+
+    /* ---------- Easter Egg ---------- */
+    const eggOverlay = document.getElementById('eggOverlay');
+    function openEgg() { vibe([10, 30, 10]); eggOverlay.classList.add('show'); }
+    function closeEgg() { eggOverlay.classList.remove('show'); }
+
+    const caseHeader = document.getElementById('caseHeader');
+    let pressTimer = null;
+
+    function startPress() { pressTimer = setTimeout(() => openEgg(), 650); }
+    function cancelPress() { if (pressTimer) clearTimeout(pressTimer); pressTimer = null; }
+
+    caseHeader.addEventListener('mousedown', startPress);
+    caseHeader.addEventListener('mouseup', cancelPress);
+    caseHeader.addEventListener('mouseleave', cancelPress);
+
+    caseHeader.addEventListener('touchstart', () => { startPress(); }, { passive: true });
+    caseHeader.addEventListener('touchend', cancelPress);
+    caseHeader.addEventListener('touchcancel', cancelPress);
+
+    let secret = '';
+    document.addEventListener('keydown', (e) => {
+        secret += (e.key || '').toLowerCase();
+        if (secret.length > 10) secret = secret.slice(-10);
+        if (secret.includes('rishi')) openEgg();
+    });
+
+    /* ---------- Memory fan interaction ---------- */
+    const memTitle = document.getElementById('memTitle');
+    const memDesc = document.getElementById('memDesc');
+
+    function setMemoryActive(cardEl, doVibe = true) {
+        const all = document.querySelectorAll('.fan-card');
+        all.forEach(c => c.classList.remove('active'));
+        cardEl.classList.add('active');
+
+        const title = cardEl.getAttribute('data-title') || 'Memory 💕';
+        const desc = cardEl.getAttribute('data-desc') || '';
+
+        if (memTitle) memTitle.textContent = title;
+        if (memDesc) memDesc.textContent = desc;
+
+        if (doVibe) vibe(12);
+    }
+
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest && e.target.closest('.fan-card');
+        if (card && currentCard === 7) setMemoryActive(card, true);
+    });
+
+    document.addEventListener('touchstart', (e) => {
+        const card = e.target.closest && e.target.closest('.fan-card');
+        if (card && currentCard === 7) setMemoryActive(card, true);
+    }, { passive: true });
+
+</script>
+</body>
+</html>
